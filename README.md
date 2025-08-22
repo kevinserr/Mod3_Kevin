@@ -63,10 +63,9 @@ ORDER BY avg_party_size DESC
 ```
 **WHY:** Identifies peak party-size days in order to align weekend staffing and targeted marketing for families/groups
 
-- 3 MAIN things that you explored and why (no giant query dumps –
-but can embed code snippets; link to /sql/01_eda.sql)
 
-# Feature Engineering (SQL) 
+
+# [**Feature Engineering (SQL)**](./sql/03_eda.sql)
 - features you created + short rationale
 
 # CTEs & Window Functions (SQL) 
