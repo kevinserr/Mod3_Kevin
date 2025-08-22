@@ -1,7 +1,7 @@
 # Beyond the Gate: Driving Guest Satisfaction and Profitability Together
 [**By Kevin Serrano Lopez**](https://www.linkedin.com/in/kevin-serrano-lopez/)
 
-## 📑 Table of Contents
+## Table of Contents
 - [Business Problem](#business-problem)
 - [Stakeholders](#stakeholders)
 - [Overview of Database & Schema](#overview-of-database--schema)
