@@ -29,7 +29,7 @@ The Supernova theme park is struggling with uneven guest satisfaction and incons
 
 ### Visits by Ticket Type
 I explored visit patterns over time and by ticket type, joinng fact_visits to dim_ticket. This highlights which ticket category drives the most visits and the distribution of volumn across days of the week.
-``` sqlite
+```sql
 SELECT 
   DISTINCT(dt.ticket_type_name) AS ticket_name,
   COUNT(*) AS number_of_visits -- counts the number of visits
@@ -42,9 +42,11 @@ ORDER BY number_of_visits DESC
 
 ### Guest Experience: Waits & Satisfaction
 I analyzed fact_ride_events for wait time distributions and average satisfiaction ratings by attraction (full code in link above). This connects wait time  with guest rating.
-``` sqlite
-SELECT a.attraction_name, a.category, 
-       AVG(r.satisfaction_rating) AS avg_rating
+```sql
+SELECT
+  a.attraction_name,
+  a.category, 
+  AVG(r.satisfaction_rating) AS avg_rating
 FROM fact_ride_events r
 JOIN dim_attraction a ON r.attraction_id = a.attraction_id
 GROUP BY a.attraction_name, a.category
@@ -54,8 +56,10 @@ ORDER BY avg_rating DESC;
 
 ### Average Party Size by Day of Week
 I joined fact_visits with dim_date to understand how group size vary across weekdays. Larger average party sizes may indicate higher group traffic which affects staffing. 
-``` sqlite
-SELECT DISTINCT(dte.day_name) AS day_of_week, ROUND(AVG(vist.party_size),2) AS avg_party_size
+```sql
+SELECT
+  DISTINCT(dte.day_name) AS day_of_week,
+  ROUND(AVG(vist.party_size),2) AS avg_party_size
 FROM fact_visits AS vist
 INNER JOIN dim_date dte ON vist.date_id = dte.date_id
 GROUP BY day_of_week
@@ -66,10 +70,74 @@ ORDER BY avg_party_size DESC
 
 
 # [**Feature Engineering (SQL)**](./sql/03_eda.sql)
-- features you created + short rationale
 
-# CTEs & Window Functions (SQL) 
-- include short code snippets of your key CTE/window queries and link to the SQL Query file
+
+| **Feature**  | **Description** | **Why it Matters** |
+|---|---|---|
+| `stay_hours`| Number of hours a guest spent in the park (exit_time – entry_time).| GM & Ops care because longer stays mean more spending opportunities and higher operational load. |
+| `spend_dollars` | Converts spend from cents to dollars; enables per-person spend analysis.| Marketing values spend-per-person to identify high-value guests, not just large groups. |
+| `satisfaction_category` | Groups satisfaction ratings into **Satisfied (≥4)** or **Unsatisfied (≤3)**.  | Easier for Ops & leadership to see which attractions drive poor experiences.                     |
+| `wait_category`  | Buckets wait times into **Short (<30)**, **Medium (30–60)**, **Long (>60)**.  | Helps Ops adjust staffing, throughput, and scheduling at attractions with long queues. |
+
+
+# [**CTEs & Window Functions (SQL)**](./sql/03_eda.sql)
+This sql query demonstrates advanced SQL patterns with CTEs and window functions.  
+Key highlights:
+
+| **Query**          | **Techniques**                   | **Business Value** |
+|---------------------|-----------------------------------|---------------------|
+| Daily Performance   | CTEs, Running Totals (`SUM OVER`) | Track visits/spend and cumulative trends |
+| RFM & CLV           | Multi-CTEs, Ranking (`RANK OVER`) | Identify high-value customers by state |
+
+
+---
+### 1. Daily Performance  
+Track visits and spend per day, with running totals.  
+
+```sql
+WITH daily_performance AS (
+  SELECT d.day_name,
+         COUNT(v.visit_id) AS daily_visits,
+         ROUND(SUM(v.spend_dollars),2) AS daily_spent
+  FROM fact_visits v
+  INNER JOIN dim_date d ON v.date_id = d.date_id
+  GROUP BY d.day_name
+),
+daily_with_running AS (
+  SELECT day_name, daily_visits, daily_spent,
+         SUM(daily_visits) OVER (ORDER BY day_name) AS running_visits,
+         SUM(daily_spent) OVER (ORDER BY day_name) AS running_spent
+  FROM daily_performance
+)
+SELECT * FROM daily_with_running;
+```
+
+### 2. RFM & CLV
+Rank customers by spend within their home state.
+```sql
+WITH customer_perf AS (
+  SELECT g.guest_id,
+         g.home_state,
+         ROUND(SUM(v.spend_dollars),2) AS total_spent,
+         MAX(v.visit_date) AS last_visit_date,
+         COUNT(v.visit_id) AS frequency
+  FROM dim_guest g
+  INNER JOIN fact_visits v ON g.guest_id = v.guest_id
+  GROUP BY g.guest_id
+),
+ranked AS (
+  SELECT *,
+         RANK() OVER (
+           PARTITION BY home_state
+           ORDER BY total_spent DESC
+         ) AS customer_rank_in_state
+  FROM customer_perf
+)
+SELECT * FROM ranked
+ORDER BY home_state, customer_rank_in_state;
+```
+
+
 
 # Visuals (Python) 
 - embed your 3 saved images with 1–2 line captions each
