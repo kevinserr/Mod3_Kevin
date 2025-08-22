@@ -155,13 +155,44 @@ This chart shows the Average satisfaction rating by attraction. The blue bars ar
 This chart shows the breakdown of each ride and the amout of people that wait for a short, medium or long time. Here we see that in Tiny Trucks, 10 people are waiting a medium amount of time which is from 30 to 60 mins. Space Theater has the most amount of people waiting for a short period of time. However we saw from the last figure that Space Theater had an average rating of 2.78. This could indicate that wait time is not a factor in its low rating score.
 ![Chart showing wait times](figures/waitTimes.png)
 
+## Insights & Recommendations
 
-- embed your 3 saved images with 1–2 line captions each
+**General Manager (GM)**  
+- Implement a dashboard integrating wait-time, satisfaction, and revenue trends.  
+- Monitor performance daily and flag anomalies in real time.  
 
-# Insights & Recommendations
--concrete actions for GM, Ops, AND Marketing
-# Ethics & Bias 
-- data quality, missing values, duplicates, margin not modeled,
-time window, etc.
+**Operations Director**  
+- Prioritize increasing capacity or staffing at **"Wild Rapids"** to reduce dissatisfaction.  
+- Leverage wait-time buckets to allocate resources dynamically.  
+
+**Marketing Director**  
+- Promote offerings tied to **high-value tickets** and **high-performing rides** (e.g., *Dragon Drop*).  
+- Target **family groups** during peak party size days for upselling.  
+
+**Cross-Functional Actions**  
+- Coordinate promotions during **historically high-spend but underperforming days**.  
+- Example: Target **Sunday spending** with in-park offers combined with operational readiness.  
+
+## Ethics & Bias Considerations
+
+**Data Quality**  
+- Ride events (`fact_ride_events`) contain **missing wait times** and occasional `NULL` values in `satisfaction_rating`.  
+- Purchases (`fact_purchases`) show **inconsistent `amount_cents` values** (some missing, some formatted as text like `USD1004`).  
+- Marketing opt-in data in `dim_guest` is inconsistent (`Yes`, `no`, `Y`, `N`, `None`), requiring standardization.  
+
+**Margin & Costs**  
+- Current features capture guest spending (`spend_dollars`) but not **ride profitability** or **operational costs**.  
+- For balanced insights, integrate cost-based metrics (e.g., food margins vs. ride staffing costs).  
+
+**Temporal Biases**  
+- `dim_date` links events to specific days, but spikes may reflect **holidays, promotions, or weather events** rather than typical behavior.  
+- Example: unusually high dissatisfaction on a rainy day could misrepresent a ride’s true performance.  
+
+**Representation**  
+- `dim_guest.home_state` shows skew (e.g., heavy concentration of NY & CA visitors), which may bias guest satisfaction trends.  
+- Age distribution (`birthdate`) could reveal **underrepresented groups** (e.g., seniors or very young visitors).  
+- Ticket data (`dim_ticket`) may overemphasize certain ticket types, potentially biasing revenue and marketing insights.  
+  
+
 # Repo Navigation 
 - /sql, /notebooks, /figures, /data
