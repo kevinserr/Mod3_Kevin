@@ -142,14 +142,17 @@ ORDER BY home_state, customer_rank_in_state;
 # Visuals (Python) 
 
 ### Figure 1
+This chart shows the daily spent by day of the week and daily visits by day of the week. I decided to show a side by side of both charts. From this we can see that Sunday has the highest spent and Monday is the busiest with 8 visitors. 
 ![Chart showing daily performance](figures/daily_attendance.png)
 
 
 ### Figure 2
+This chart shows the Average satisfaction rating by attraction. The blue bars are what I would consider a 'positive' rating (>3) and red is 'negative' (<3). From this we see that Dragon Drop has the highest rating whereas Wild Rapids has the lowest rating. We need to work on this.
 ![Chart showing Rating VS Attraction](figures/ratingByAttraction.png)
 
 
 ### Figure 3
+This chart shows the breakdown of each ride and the amout of people that wait for a short, medium or long time. Here we see that in Tiny Trucks, 10 people are waiting a medium amount of time which is from 30 to 60 mins. Space Theater has the most amount of people waiting for a short period of time. However we saw from the last figure that Space Theater had an average rating of 2.78. This could indicate that wait time is not a factor in its low rating score.
 ![Chart showing wait times](figures/waitTimes.png)
 
 
