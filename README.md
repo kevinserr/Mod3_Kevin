@@ -38,7 +38,7 @@ INNER JOIN dim_ticket dt ON fv.ticket_type_id = dt.ticket_type_id
 GROUP BY ticket_name 
 ORDER BY number_of_visits DESC 
 ```
-**WHY:** Helps marketing understand which promotions/ticket types attract volume, and operations gauge crowding trends
+**Purpose:** Helps marketing understand which promotions/ticket types attract volume, and operations gauge crowding trends
 
 ### Guest Experience: Waits & Satisfaction
 I analyzed fact_ride_events for wait time distributions and average satisfiaction ratings by attraction (full code in link above). This connects wait time  with guest rating.
@@ -52,7 +52,7 @@ JOIN dim_attraction a ON r.attraction_id = a.attraction_id
 GROUP BY a.attraction_name, a.category
 ORDER BY avg_rating DESC;
 ```
-**WHY:** Identifies which rides have long waits so operations can target fixes.
+**Purpose:** Identifies which rides have long waits so operations can target fixes.
 
 ### Average Party Size by Day of Week
 I joined fact_visits with dim_date to understand how group size vary across weekdays. Larger average party sizes may indicate higher group traffic which affects staffing. 
@@ -65,7 +65,7 @@ INNER JOIN dim_date dte ON vist.date_id = dte.date_id
 GROUP BY day_of_week
 ORDER BY avg_party_size DESC
 ```
-**WHY:** Identifies peak party-size days in order to align weekend staffing and targeted marketing for families/groups
+**Purpose:** Identifies peak party-size days in order to align weekend staffing and targeted marketing for families/groups
 
 
 
