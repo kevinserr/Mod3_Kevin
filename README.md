@@ -27,6 +27,7 @@ The Supernova theme park is struggling with uneven guest satisfaction and incons
 
 # [**EDA (SQL)**](./sql/01_eda.sql)
 ``` sqlite
+-- Visits by ticket type
 SELECT 
   DISTINCT(dt.ticket_type_name) AS ticket_name,
   COUNT(*) AS number_of_visits -- counts the number of visits
@@ -34,7 +35,30 @@ FROM fact_visits fv
 INNER JOIN dim_ticket dt ON fv.ticket_type_id = dt.ticket_type_id
 GROUP BY ticket_name 
 ORDER BY number_of_visits DESC 
-``` 
+```
+**WHY**: Helps marketing understand which promotions/ticket types attract volume, and operations gauge crowding trends
+
+``` sqlite
+-- Avg satisfaction by attraction
+SELECT a.attraction_name, a.category, 
+       AVG(r.satisfaction_rating) AS avg_rating
+FROM fact_ride_events r
+JOIN dim_attraction a ON r.attraction_id = a.attraction_id
+GROUP BY a.attraction_name, a.category
+ORDER BY avg_rating DESC;
+```
+**WHY:** Identifies which rides have long waits so operations can target fixes.
+
+``` sqlite
+-- Average party_size by day of week (dim_date.day_name)
+SELECT DISTINCT(dte.day_name) AS day_of_week, ROUND(AVG(vist.party_size),2) AS avg_party_size
+FROM fact_visits AS vist
+INNER JOIN dim_date dte ON vist.date_id = dte.date_id
+GROUP BY day_of_week
+ORDER BY avg_party_size DESC
+```
+**WHY:**
+
 - 3 MAIN things that you explored and why (no giant query dumps –
 but can embed code snippets; link to /sql/01_eda.sql)
 
