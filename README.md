@@ -26,6 +26,16 @@ The Supernova theme park is struggling with uneven guest satisfaction and incons
 - Flexiblity - easier to look into performance by guest without restructuring the data
 
 # EDA (SQL) 
+[**EDA (SQL)**](./sql/01_eda.sql)
+``` sqlite
+SELECT 
+  DISTINCT(dt.ticket_type_name) AS ticket_name,
+  COUNT(*) AS number_of_visits -- counts the number of visits
+FROM fact_visits fv
+INNER JOIN dim_ticket dt ON fv.ticket_type_id = dt.ticket_type_id
+GROUP BY ticket_name 
+ORDER BY number_of_visits DESC 
+``` 
 - 3 MAIN things that you explored and why (no giant query dumps –
 but can embed code snippets; link to /sql/01_eda.sql)
 
