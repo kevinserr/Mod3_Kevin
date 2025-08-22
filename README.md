@@ -1,6 +1,19 @@
 # Beyond the Gate: Driving Guest Satisfaction and Profitability Together
 [**By Kevin Serrano Lopez**](https://www.linkedin.com/in/kevin-serrano-lopez/)
 
+## 📑 Table of Contents
+- [Business Problem](#business-problem)
+- [Stakeholders](#stakeholders)
+- [Overview of Database & Schema](#overview-of-database--schema)
+- [EDA (SQL)](#eda-sql)
+- [Feature Engineering (SQL)](#feature-engineering-sql)
+- [CTEs & Window Functions (SQL)](#ctes--window-functions-sql)
+- [Visuals (Python)](#visuals-python)
+- [Insights & Recommendations](#insights--recommendations)
+- [Ethics & Bias Considerations](#ethics--bias-considerations)
+- [Repo Navigation](#repo-navigation)
+
+
 # Business Problem
 The Supernova theme park is struggling with uneven guest satisfaction and inconsistent revenue, driven by long attraction wait times, unpredictable ride availability, and overcrowding. At the same time, marketing campaigns are drawing visitors but not always the most profitable ones, as discount-driven guests often spend less in-park. Leadership needs a coordinated strategy that balances operational efficiency with targeted marketing to improve both guest experience and overall profitability.
 
