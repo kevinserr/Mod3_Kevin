@@ -140,6 +140,19 @@ ORDER BY home_state, customer_rank_in_state;
 
 
 # Visuals (Python) 
+
+### Figure 1
+![Chart showing daily performance](figures/daily_attendance.png)
+
+
+### Figure 2
+![Chart showing Rating VS Attraction](figures/ratingByAttraction.png)
+
+
+### Figure 3
+![Chart showing wait times](figures/waitTimes.png)
+
+
 - embed your 3 saved images with 1–2 line captions each
 
 # Insights & Recommendations
