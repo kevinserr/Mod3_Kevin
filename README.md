@@ -195,4 +195,19 @@ This chart shows the breakdown of each ride and the amout of people that wait fo
   
 
 # Repo Navigation 
-- /sql, /notebooks, /figures, /data
+```text
+.
+├── data/
+│   ├── raw/
+│   └── processed/
+├── figures/
+│   └── (visualizations: graphs)
+├── notebooks/
+│   └── main.ipynb
+├── sql/
+│   ├── 01_eda.sql
+│   ├── 02_feature_engineering.sql
+│   ├── 03_analysis.sql
+│   └── 04_analysis.sql
+└── README.md
+
