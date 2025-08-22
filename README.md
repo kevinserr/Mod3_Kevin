@@ -25,8 +25,7 @@ The Supernova theme park is struggling with uneven guest satisfaction and incons
 - Faster queries - Aggregations are efficient
 - Flexiblity - easier to look into performance by guest without restructuring the data
 
-# EDA (SQL) 
-[**EDA (SQL)**](./sql/01_eda.sql)
+# [**EDA (SQL)**](./sql/01_eda.sql)
 ``` sqlite
 SELECT 
   DISTINCT(dt.ticket_type_name) AS ticket_name,
