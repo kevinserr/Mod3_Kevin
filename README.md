@@ -26,8 +26,10 @@ The Supernova theme park is struggling with uneven guest satisfaction and incons
 - Flexiblity - easier to look into performance by guest without restructuring the data
 
 # [**EDA (SQL)**](./sql/01_eda.sql)
+
+### Visits by Ticket Type
+I explored visit patterns over time and by ticket type, joinng fact_visits to dim_ticket. This highlights which ticket category drives the most visits and the distribution of volumn across days of the week.
 ``` sqlite
--- Visits by ticket type
 SELECT 
   DISTINCT(dt.ticket_type_name) AS ticket_name,
   COUNT(*) AS number_of_visits -- counts the number of visits
@@ -36,10 +38,11 @@ INNER JOIN dim_ticket dt ON fv.ticket_type_id = dt.ticket_type_id
 GROUP BY ticket_name 
 ORDER BY number_of_visits DESC 
 ```
-**WHY**: Helps marketing understand which promotions/ticket types attract volume, and operations gauge crowding trends
+**WHY:** Helps marketing understand which promotions/ticket types attract volume, and operations gauge crowding trends
 
+### Guest Experience: Waits & Satisfaction
+I analyzed fact_ride_events for wait time distributions and average satisfiaction ratings by attraction (full code in link above). This connects wait time  with guest rating.
 ``` sqlite
--- Avg satisfaction by attraction
 SELECT a.attraction_name, a.category, 
        AVG(r.satisfaction_rating) AS avg_rating
 FROM fact_ride_events r
@@ -49,15 +52,16 @@ ORDER BY avg_rating DESC;
 ```
 **WHY:** Identifies which rides have long waits so operations can target fixes.
 
+### Average Party Size by Day of Week
+I joined fact_visits with dim_date to understand how group size vary across weekdays. Larger average party sizes may indicate higher group traffic which affects staffing. 
 ``` sqlite
--- Average party_size by day of week (dim_date.day_name)
 SELECT DISTINCT(dte.day_name) AS day_of_week, ROUND(AVG(vist.party_size),2) AS avg_party_size
 FROM fact_visits AS vist
 INNER JOIN dim_date dte ON vist.date_id = dte.date_id
 GROUP BY day_of_week
 ORDER BY avg_party_size DESC
 ```
-**WHY:**
+**WHY:** Identifies peak party-size days in order to align weekend staffing and targeted marketing for families/groups
 
 - 3 MAIN things that you explored and why (no giant query dumps –
 but can embed code snippets; link to /sql/01_eda.sql)
